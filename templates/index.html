@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if message %}
+<div class="box message">
+    {{ message }}
+</div>
+{% endif %}
+
+<div class="box">
+    <form method="get">
+        <label for="search">Поиск по имени, фамилии или телефону</label>
+        <input type="text" id="search" name="search" value="{{ search }}">
+        <button type="submit">Найти</button>
+    </form>
+</div>
+
+<div class="box">
+    <h2>Список контактов</h2>
+
+    {% if contacts %}
+    <table>
+        <tr>
+            <th>Имя</th>
+            <th>
+                <div class="sortable-title">
+                    <span>Фамилия</span>
+                    <a class="sort-arrow" href="{{ url_for('index', search=search, sort='desc' if sort == 'asc' else 'asc') }}">
+                        {% if sort == "asc" %}↑{% else %}↓{% endif %}
+                    </a>
+                </div>
+            </th>
+            <th>Телефон</th>
+            <th>Действия</th>
+        </tr>
+        {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.first_name }}</td>
+            <td>{{ contact.last_name }}</td>
+            <td>{{ contact.phone }}</td>
+            <td class="actions">
+                <a href="{{ url_for('contact_detail', contact_id=contact.id) }}">Открыть</a>
+                <a href="{{ url_for('edit_contact', contact_id=contact.id) }}">Изменить</a>
+                <form class="inline-form" action="{{ url_for('delete_contact', contact_id=contact.id) }}" method="post">
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Контакты не найдены.</p>
+    {% endif %}
+</div>
+{% endblock %}

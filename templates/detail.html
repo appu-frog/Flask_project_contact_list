@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="box">
+    {% if contact %}
+    <h2>Информация о контакте</h2>
+    <p><b>Имя:</b> {{ contact.first_name }}</p>
+    <p><b>Фамилия:</b> {{ contact.last_name }}</p>
+    <p><b>Телефон:</b> {{ contact.phone }}</p>
+    <p><b>Email:</b> {{ contact.email }}</p>
+    <p><b>Адрес:</b> {{ contact.address }}</p>
+    <a href="{{ url_for('edit_contact', contact_id=contact.id) }}">Редактировать</a>
+    {% else %}
+    <p>Контакт не найден.</p>
+    {% endif %}
+</div>
+{% endblock %}

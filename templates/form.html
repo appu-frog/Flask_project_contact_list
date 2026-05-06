@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if error %}
+<div class="box error">
+    {{ error }}
+</div>
+{% endif %}
+
+<div class="box">
+    <h2>{{ title }}</h2>
+
+    <form method="post">
+        <label>Имя</label>
+        <input type="text" name="first_name" minlength="2" maxlength="50" value="{{ contact.first_name if contact else '' }}" required>
+
+        <label>Фамилия</label>
+        <input type="text" name="last_name" minlength="2" maxlength="50" value="{{ contact.last_name if contact else '' }}" required>
+
+        <label>Телефон</label>
+        <input type="text" name="phone" maxlength="25" value="{{ contact.phone if contact else '' }}" required>
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ contact.email if contact else '' }}">
+
+        <label>Адрес</label>
+        <textarea name="address">{{ contact.address if contact else '' }}</textarea>
+
+        <button type="submit">Сохранить</button>
+    </form>
+</div>
+{% endblock %}
